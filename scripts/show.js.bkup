@@ -1,0 +1,5 @@
+$(document).ready(function() {
+    $('.showmore').click(function() {
+        $( '.list li:hidden').slice(0,10).show();
+    });
+});

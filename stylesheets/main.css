@@ -1,0 +1,10 @@
+body {
+  font-family: Verdana, Helvetica, sans-serif;
+  background-color: #DDDDDD;
+}
+.logo {
+  border: "0"
+}
+table tr:nth-child(n+20) {
+    display:none;
+}

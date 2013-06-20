@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.showmore').click(function() {
+                $( 'table tr:hidden').slice(0,20).show();
+                if ( $('table tr').length == $('table tr:visible').length ) {
+                    $('button').hide();
+                }
+            });
+        });
+    </script>
+  </head>
+
+  <body>
+    <h1>Coursera Course List</h1>
+
+    <table border="1">
+      {% for course in courses %}
+        <tr class="row">
+          <td>
+              <span id="name">{{ course.name }}</span><br/>
+              <span id="instructor">{{ course.instructor }}</span><br/>
+              <span id="start">Start Date: {{ course.start_date }}</span><br/>
+              <span id="duration">{{ course.duration }}</span><br/><br/>
+              <span id="description">{{ course.short_description }}</span>
+            </div>
+          </td>
+          <td><img src="{{ course.image }}" alt=""></img></td>
+          <td>
+            {% if course.preview_link is not none %}
+              <form method="link" action="{{ course.preview_link }}">
+                <input type="submit" class="preview" value="Check out class preview!">
+              </form>
+            {% endif %}
+            {% for uni in course.universities %}
+              {% if uni.u_home_link is not none %}
+                <a href="{{ uni.u_home_link }}">
+                <img src="{{ uni.u_logo }}" alt="{{ uni.name }}" class="logo"></a><br/><br/>
+              {% elif uni.u_website is not none %}
+                <a href="{{ uni.u_website }}">
+                <img src="{{ uni.u_logo }}" alt="{{ uni.name }}" class="logo"></a><br/><br/>
+              {% else %}
+                <img src="{{ uni.u_logo }}" alt="{{ uni.name }}" class="logo"><br/><br/>
+              {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    <button type="button" class="showmore">Show More</button>
+
+
+
+  </body>
+</html>
