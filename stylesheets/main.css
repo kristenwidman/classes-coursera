@@ -3,8 +3,58 @@ body {
   background-color: #DDDDDD;
 }
 .logo {
+
   border: "0"
 }
+
 table tr:nth-child(n+20) {
     display:none;
 }
+
+.row {
+    background-color: #FFFFF0;
+}
+
+.preview {
+    font-size:1em;
+}
+
+#name {
+    font-size:25px;
+    font-weight: bold;
+    color: #2F4F4F;
+}
+
+.third {
+    text-align: center;
+    width:300px;
+}
+
+
+.preview {
+    position:relative;
+    top:25px;
+}
+
+.logo, .u_name {
+    position:relative;
+    top:60px;
+}
+
+.u_name {
+    font-size:1em;
+    color: #483D8B;
+    text-decoration:none;
+}
+
+.u_name:link {
+    text-decoration:none;
+}
+.u_name:visited {
+    color: #68228B;
+    text-decoration:none;
+}
+.u_name:hover {
+    text-decoration:underline;
+}
+

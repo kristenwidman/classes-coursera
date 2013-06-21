@@ -22,30 +22,52 @@
       {% for course in courses %}
         <tr class="row">
           <td>
-              <span id="name">{{ course.name }}</span><br/>
-              <span id="instructor">{{ course.instructor }}</span><br/>
-              <span id="start">Start Date: {{ course.start_date }}</span><br/>
-              <span id="duration">{{ course.duration }}</span><br/><br/>
-              <span id="description">{{ course.short_description }}</span>
+              <span id="name">{{ course.name }}</span>
+              <br/>
+              {% if course.instructor != '' and course.instructor is not none %}
+                <span id="instructor">{{ course.instructor }}</span><br/>
+              {% endif %}
+              {% if course.start_date != '' and course.start_date is not none %}
+                <span id="start">Start Date: {{ course.start_date }}</span><br/>
+              {% endif %}
+              {% if course.duration != '' and course.duration is not none %}
+                <span id="duration">{{ course.duration }}</span><br/>
+              {% endif %}
+              <br/>
+              {% if course.description != '' and course.description is not none %}
+                <span id="description">{{ course.short_description }}</span>
+              {% endif %}
             </div>
           </td>
           <td><img src="{{ course.image }}" alt=""></img></td>
-          <td>
+          <td class="third">
             {% if course.preview_link is not none %}
               <form method="link" action="{{ course.preview_link }}">
                 <input type="submit" class="preview" value="Check out class preview!">
+                <br/><br/>
               </form>
             {% endif %}
             {% for uni in course.universities %}
-              {% if uni.u_home_link is not none %}
+              {% if uni.u_home_link is not none and uni.u_home_link != '' %}
                 <a href="{{ uni.u_home_link }}">
-                <img src="{{ uni.u_logo }}" alt="{{ uni.name }}" class="logo"></a><br/><br/>
-              {% elif uni.u_website is not none %}
+                <img src="{{ uni.u_logo }}" class="logo"></a><br/><br/>
+              {% elif uni.u_website is not none and uni.u_website != '' %}
                 <a href="{{ uni.u_website }}">
-                <img src="{{ uni.u_logo }}" alt="{{ uni.name }}" class="logo"></a><br/><br/>
-              {% else %}
-                <img src="{{ uni.u_logo }}" alt="{{ uni.name }}" class="logo"><br/><br/>
+                <img src="{{ uni.u_logo }}" class="logo"></a><br/><br/>
+              {% elif uni.u_logo is not none and uni.u_logo != '' %}
+                <img src="{{ uni.u_logo }}" class="logo"><br/><br/>
               {% endif %}
+
+              {% if uni.u_logo == '' and uni.u_home_link is not none and uni.u_home_link != '' %}
+                <a href="{{ uni.u_home_link }}">
+                <span class="u_name">{{ uni.u_name }}</span></a><br/><br/>
+              {% elif uni.u_logo == '' and uni.u_website is not none and uni.u_website != '' %}
+                <a href="{{ uni.u_website }}">
+                <span class="u_name">{{ uni.u_name }}</span></a><br/><br/>
+              {% elif uni.u_logo == '' %}
+                <span class="u_name">{{ uni.u_name }}</span><br/><br/>
+              {% endif %}
+
             {% endfor %}
           </td>
         </tr>

@@ -37,20 +37,20 @@ class ListCourses(webapp2.RequestHandler):
         api_url = "https://www.coursera.org/maestro/api/topic/list"
         api = requests.get(api_url)
         js = api.json()
-        #courses_dated = []
-        #courses_tbd_future = [] #order does not matter
-        #courses_past = []  #order does not matter
         courses = []
         for course in js:
-            #if course['language'] == 'en':
-            #course = js[0]
             image = course['large_icon']
             name = course['name']
             instructor = course['instructor']
             short_description = course['short_description']
             preview_link = course['preview_link']
-            latest_offering = course['courses'][-1]
-            duration = latest_offering['duration_string']
+            if len(course['courses']) > 0:
+                latest_offering = course['courses'][-1]
+                duration = latest_offering['duration_string']
+                date = self.determine_date(latest_offering)
+            else:
+                date = None
+                duration = None
             if duration is not None and duration != '':
                 duration += " long"
             universities = []
@@ -64,7 +64,6 @@ class ListCourses(webapp2.RequestHandler):
                                         'u_description':u_description,
                                         'u_home_link':u_home_link,
                                         'u_website':u_website})
-            date = self.determine_date(latest_offering)
 
             courses.append({'name':name,'image':image, 'instructor':instructor,
                             'short_description':short_description,
@@ -73,9 +72,6 @@ class ListCourses(webapp2.RequestHandler):
                             'duration':duration, 'universities':universities})
 
         template_values = {
-                #'course': courses[0],
-                #'name': name,
-                #'image': image,
                 'courses': courses
         }
 
